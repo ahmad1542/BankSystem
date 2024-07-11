@@ -1,6 +1,10 @@
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Vector;
+import java.util.List;
 
 public class BankClient extends Person {
     private enum enMode {
@@ -25,12 +29,24 @@ public class BankClient extends Person {
         this.balance = balance;
     }
 
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
 
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
+    }
+
     public String getPinCode() {
         return pinCode;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public double getBalance() {
@@ -67,6 +83,48 @@ public class BankClient extends Person {
         return getEmptyClientObject();
     }
 
+    private static Vector <BankClient> loadClientsDataFromFile() {
+        Vector<BankClient> vClient = new Vector<>();
+        try (Scanner fileScanner = new Scanner(new FileReader("D:\\GitHub Repository\\Programming-Save\\Java\\Clients.txt"))) {
+            String line = fileScanner.nextLine();
+            while (fileScanner.hasNextLine()) {
+                BankClient client = convertLineToClientObject(line);
+                vClient.add(client);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return vClient;
+    }
+
+    private void update() {
+        List <BankClient> lClient;
+        lClient = loadClientsDataFromFile();
+        for(int i = 0; i <= lClient.size(); i++) {
+            if(lClient.get(i).getAccountNumber().equals(this.getAccountNumber())) {
+                lClient.set(i, this);
+                break;
+            }
+        }
+        saveClientsDataToFile(lClient);
+    }
+
+    private void saveClientsDataToFile(List<BankClient> clients) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("Clients.txt"))) {
+            for (BankClient client : clients) {
+                bw.write(client.toFileString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String toFileString() {
+        return getFirstName() + "#//#" + getLastName() + "#//#" + getEmail() + "#//#" + getPhoneNumber() +
+                "#//#" + accountNumber + "#//#" + pinCode + "#//#" + balance;
+    }
+
     private static BankClient convertLineToClientObject(String line) {
         Scanner lineScanner = new Scanner(line);
         lineScanner.useDelimiter("#//#");
@@ -95,6 +153,28 @@ public class BankClient extends Person {
     public static boolean isClientExist(String accountNumber) {
         BankClient client = find(accountNumber);
         return (!client.isEmpty());
+    }
+
+    public static String readString() {
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine().trim();
+        return input;
+    }
+
+    enum enSaveResults {
+        svFailedEmptyObject,
+        svSucceeded
+    }
+
+    enSaveResults save() {
+        switch (mode) {
+            case enMode.emptyMode -> {
+                return enSaveResults.svFailedEmptyObject;
+            }
+            default ->   {
+                return enSaveResults.svSucceeded;
+            }
+        }
     }
 
     @Override
