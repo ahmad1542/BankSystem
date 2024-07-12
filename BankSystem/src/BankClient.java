@@ -9,12 +9,14 @@ import java.util.List;
 public class BankClient extends Person {
     private enum enMode {
         emptyMode,
-        updateMode
+        updateMode,
+        addNewMode
     }
     private enMode mode;
     private String accountNumber;
     private String pinCode;
     private double balance;
+    private boolean markedForDelete;
 
     public BankClient() {
 
@@ -53,8 +55,12 @@ public class BankClient extends Person {
         return balance;
     }
 
+    public boolean isMarkedForDelete() {
+        return markedForDelete;
+    }
+
     public static BankClient find(String accountNumber) {
-        try (Scanner fileScanner = new Scanner(new FileReader("D:\\GitHub Repository\\Programming-Save\\Java\\Clients.txt"))) {
+        try (Scanner fileScanner = new Scanner(new FileReader("Clients.txt"))) {
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 BankClient client = convertLineToClientObject(line);
@@ -69,7 +75,7 @@ public class BankClient extends Person {
     }
 
     public static BankClient find(String accountNumber, String pinCode) {
-        try (Scanner fileScanner = new Scanner(new FileReader("D:\\GitHub Repository\\Programming-Save\\Java\\Clients.txt"))) {
+        try (Scanner fileScanner = new Scanner(new FileReader("Clients.txt"))) {
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 BankClient client = convertLineToClientObject(line);
@@ -83,11 +89,24 @@ public class BankClient extends Person {
         return getEmptyClientObject();
     }
 
+    private void addNew() {
+        addDataLineToFile(convertClientObjectToLine(this));
+    }
+
+    private void addDataLineToFile(String dataLine) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Clients.txt", true))) {
+            writer.newLine();
+            writer.write(dataLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static Vector <BankClient> loadClientsDataFromFile() {
         Vector<BankClient> vClient = new Vector<>();
-        try (Scanner fileScanner = new Scanner(new FileReader("D:\\GitHub Repository\\Programming-Save\\Java\\Clients.txt"))) {
-            String line = fileScanner.nextLine();
+        try (Scanner fileScanner = new Scanner(new FileReader("Clients.txt"))) {
             while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
                 BankClient client = convertLineToClientObject(line);
                 vClient.add(client);
             }
@@ -112,17 +131,19 @@ public class BankClient extends Person {
     private void saveClientsDataToFile(List<BankClient> clients) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("Clients.txt"))) {
             for (BankClient client : clients) {
-                bw.write(client.toFileString());
-                bw.newLine();
+                if (!client.isMarkedForDelete()) {
+                    bw.write(client.convertClientObjectToLine(client));
+                    bw.newLine();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String toFileString() {
-        return getFirstName() + "#//#" + getLastName() + "#//#" + getEmail() + "#//#" + getPhoneNumber() +
-                "#//#" + accountNumber + "#//#" + pinCode + "#//#" + balance;
+    private String convertClientObjectToLine(BankClient client) {
+        return client.getFirstName() + "#//#" + client.getLastName() + "#//#" + client.getEmail() + "#//#" + client.getPhoneNumber() +
+                "#//#" + client.getAccountNumber() + "#//#" + client.getPinCode() + "#//#" + client.getBalance();
     }
 
     private static BankClient convertLineToClientObject(String line) {
@@ -155,26 +176,70 @@ public class BankClient extends Person {
         return (!client.isEmpty());
     }
 
-    public static String readString() {
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine().trim();
-        return input;
-    }
+    public boolean delete() {
+        List <BankClient> lClients;
+        lClients = loadClientsDataFromFile();
 
-    enum enSaveResults {
-        svFailedEmptyObject,
-        svSucceeded
-    }
-
-    enSaveResults save() {
-        switch (mode) {
-            case enMode.emptyMode -> {
-                return enSaveResults.svFailedEmptyObject;
-            }
-            default ->   {
-                return enSaveResults.svSucceeded;
+        for(BankClient client: lClients) {
+            if (client.getAccountNumber().equals(accountNumber)) {
+                client.markedForDelete = true;
+                break;
             }
         }
+
+        saveClientsDataToFile(lClients);
+
+        this.copyFrom(getEmptyClientObject());
+
+        return true;
+    }
+
+    private void copyFrom(BankClient other) {
+        this.accountNumber = other.accountNumber;
+        this.pinCode = other.pinCode;
+        this.balance = other.balance;
+        this.markedForDelete = other.markedForDelete;
+        this.setFirstName(other.getFirstName());
+        this.setLastName(other.getLastName());
+        this.setEmail(other.getEmail());
+        this.setPhoneNumber(other.getPhoneNumber());
+    }
+
+    public enum enSaveResults {
+        svFailedEmptyObject,
+        svSucceeded,
+        svFaildAccountNumberExists
+    }
+
+    public enSaveResults save() {
+        switch (mode) {
+            case enMode.emptyMode -> {
+                if (isEmpty())
+                    return enSaveResults.svFailedEmptyObject;
+            }
+            case enMode.updateMode ->   {
+                update();
+                return enSaveResults.svSucceeded;
+            }
+            default -> {
+                if (isClientExist(accountNumber))
+                    return enSaveResults.svFaildAccountNumberExists;
+                else {
+                    addNew();
+                    mode = enMode.updateMode;
+                    return enSaveResults.svSucceeded;
+                }
+            }
+        }
+        return null;
+    }
+
+    static BankClient getAddNewClientObject(String AccountNumber) {
+        return new BankClient(enMode.addNewMode, "", "", "", "", AccountNumber, "", 0);
+    }
+
+    public static List <BankClient> getClientsList() {
+        return loadClientsDataFromFile();
     }
 
     @Override
