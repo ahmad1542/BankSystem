@@ -7,6 +7,16 @@ import java.util.Vector;
 import java.util.List;
 
 public class BankClient extends Person {
+    private enum enMainMenueOptions {
+        eListClients,
+        eAddNewClient,
+        eDeleteClient,
+        eUpdateClient,
+        eFindClient,
+        eShowTransactionsMenue,
+        eManageUsers,
+        eExit
+    }
     private enum enMode {
         emptyMode,
         updateMode,
@@ -240,6 +250,16 @@ public class BankClient extends Person {
 
     public static List <BankClient> getClientsList() {
         return loadClientsDataFromFile();
+    }
+
+    public static double getTotalBalances() {
+        List<BankClient> lCLient = getClientsList();
+        double totalBalances = 0;
+
+        for (BankClient client: lCLient) {
+            totalBalances += client.getBalance();
+        }
+        return totalBalances;
     }
 
     @Override
