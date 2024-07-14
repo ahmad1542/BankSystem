@@ -173,7 +173,7 @@ public class BankClient extends Person {
         return new BankClient(enMode.updateMode, firstName, lastName, email, phoneNumber, accountNumber, pinCode, balance);
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return (this.mode == enMode.emptyMode);
     }
 

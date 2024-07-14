@@ -200,11 +200,36 @@ public class Utility {
             return numberToText(number / 1000000000) + " Billions " + numberToText(number % 1000000000);
         }
 
+    }
+
+    public static void clearConsole() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
         }
+    }
 
     public static String readString() {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine().trim();
+        return input;
+    }
+
+    public static short readShort() {
+        Scanner scan = new Scanner(System.in);
+        short input = scan.nextShort();
+        return input;
+    }
+
+    public static short readShortNumberBetween(short from, short to) {
+        Scanner scan = new Scanner(System.in);
+        short input = scan.nextShort();
+        if (input <= to && input >= from) {
+            return input;
+        }
+        while (input > to || input < from) {
+            System.out.print("Error!!\nEnter an appropriate number: ");
+            input = scan.nextShort();
+        }
         return input;
     }
 
