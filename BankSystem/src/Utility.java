@@ -233,9 +233,19 @@ public class Utility {
         return input;
     }
 
-    public static double readDouble() {
-        Scanner scan = new Scanner(System.in);
-        double input = scan.nextDouble();
-        return input;
+    public static double readDoubleNumber() {
+        String errorMessage = "Invalid Number, Enter again";
+        Scanner scanner = new Scanner(System.in);
+        double number;
+        while (true) {
+            if (scanner.hasNextDouble()) {
+                number = scanner.nextDouble();
+                break;
+            } else {
+                System.out.print(errorMessage);
+                scanner.next(); // clear the invalid input
+            }
+        }
+        return number;
     }
 }

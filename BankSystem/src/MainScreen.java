@@ -65,7 +65,7 @@ public class MainScreen extends Screen {
         FindClientScreen.showFindClientScreen();
     }
     private static void showTransactionsMenue() {
-        System.out.println("\nTransactions Menu Will be here...\n");
+        TransactionScreen.showTransactionsMenu();
     }
     private static void showManageUsersMenue() {
         System.out.println("\nUsers Menu Will be here...\n");

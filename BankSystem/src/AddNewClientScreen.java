@@ -11,7 +11,7 @@ public class AddNewClientScreen extends Screen {
         System.out.println("\nEnter pin code: ");
         client.setPinCode(Utility.readString());
         System.out.println("\nEnter account balance: ");
-        client.setBalance(Utility.readDouble());
+        client.setBalance(Utility.readDoubleNumber());
     }
 
     public static void ShowAddNewClientScreen() {

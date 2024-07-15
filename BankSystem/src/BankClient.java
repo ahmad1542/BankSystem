@@ -262,6 +262,22 @@ public class BankClient extends Person {
         return totalBalances;
     }
 
+    public void deposit(double amount) {
+        balance += amount;
+        save();
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > balance) {
+            return false;
+        }
+        else {
+            balance -= amount;
+            save();
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "BankClient{" +
