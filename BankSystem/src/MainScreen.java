@@ -64,11 +64,11 @@ public class MainScreen extends Screen {
     private static void showFindClientScreen() {
         FindClientScreen.showFindClientScreen();
     }
-    private static void showTransactionsMenue() {
+    private static void showTransactionsMenu() {
         TransactionScreen.showTransactionsMenu();
     }
-    private static void showManageUsersMenue() {
-        System.out.println("\nUsers Menu Will be here...\n");
+    private static void showManageUsersMenu() {
+        ManageUsersScreen.showManageUsersMenu();
     }
     private static void showEndScreen() {
         System.out.println("\nEnd Screen Will be here...\n");
@@ -108,12 +108,12 @@ public class MainScreen extends Screen {
             }
             case enMainMenuOptions.eShowTransactionsMenu -> {
                 Utility.clearConsole();
-                showTransactionsMenue();
+                showTransactionsMenu();
                 break;
             }
             case enMainMenuOptions.eManageUsers -> {
                 Utility.clearConsole();
-                showManageUsersMenue();
+                showManageUsersMenu();
                 break;
             }
             case enMainMenuOptions.eExit -> {

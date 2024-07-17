@@ -17,7 +17,7 @@ public class BankClient extends Person {
         eManageUsers,
         eExit
     }
-    private enum enMode {
+    enum enMode {
         emptyMode,
         updateMode,
         addNewMode
@@ -27,10 +27,6 @@ public class BankClient extends Person {
     private String pinCode;
     private double balance;
     private boolean markedForDelete;
-
-    public BankClient() {
-
-    }
 
     public BankClient(enMode mode, String firstName, String lastName, String email, String phoneNumber,
                       String accountNumber, String pinCode, double balance) {
@@ -244,7 +240,7 @@ public class BankClient extends Person {
         return null;
     }
 
-    static BankClient getAddNewClientObject(String AccountNumber) {
+    public static BankClient getAddNewClientObject(String AccountNumber) {
         return new BankClient(enMode.addNewMode, "", "", "", "", AccountNumber, "", 0);
     }
 
