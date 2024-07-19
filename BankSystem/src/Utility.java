@@ -248,4 +248,20 @@ public class Utility {
         }
         return number;
     }
+
+    public static int readIntNumber() {
+        String errorMessage = "Invalid Number, Enter again";
+        Scanner scanner = new Scanner(System.in);
+        int number;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                number = scanner.nextInt();
+                break;
+            } else {
+                System.out.print(errorMessage);
+                scanner.next(); // clear the invalid input
+            }
+        }
+        return number;
+    }
 }

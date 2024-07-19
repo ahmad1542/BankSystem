@@ -46,16 +46,16 @@ public class ManageUsersScreen extends Screen {
         ListUsersScreen.showUsersList();
     }
     private static void showAddNewUserScreen() {
-        System.out.println("\nAdd new user screen will be here.");
+        AddNewUserScreen.ShowAddNewUserScreen();
     }
     private static void showDeleteUserScreen() {
-        System.out.println("\nDelete user screen will be here.");
+        DeleteUserScreen.showDeleteUserScreen();
     }
     private static void showUpdateUserScreen() {
-        System.out.println("\nUpdate user screen will be here.");
+        UpdateUserScreen.showUpdateUserScreen();
     }
     private static void showFindUserScreen() {
-        System.out.println("\nFind user screen will be here.");
+        FindUserScreen.showFindUserScreen();
     }
 
     private static void performManageUsersMenuOption(enManageUsersMenuOptions ManageUsersMenuOption) {

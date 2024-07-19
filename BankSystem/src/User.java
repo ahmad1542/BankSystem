@@ -7,6 +7,16 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class User extends Person {
+    public enum enPermissions {
+        eAll,
+        pListClients,
+        pAddNewClient,
+        pDeleteClient,
+        pUpdateClient,
+        pFindClient,
+        pTransactions,
+        pManageUsers,
+    }
     private enum enMode {
         emptyMode,
         updateMode,
