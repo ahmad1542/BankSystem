@@ -16,6 +16,10 @@ public class AddNewClientScreen extends Screen {
 
     public static void ShowAddNewClientScreen() {
 
+        if (!checkAccessRights(User.enPermissions.pAddNewClient)) {
+            return;
+        }
+
         drawScreenHeader("\t  Add New Client Screen", "");
 
         String accountNumber = "";

@@ -12,6 +12,11 @@ public class ClientListScreen extends Screen {
     }
 
     public static void showClientsList() {
+
+        if (!checkAccessRights(User.enPermissions.pListClients)) {
+            return;
+        }
+
         List<BankClient> clients = BankClient.getClientsList();
 
         String title = "\t  Client List Screen";

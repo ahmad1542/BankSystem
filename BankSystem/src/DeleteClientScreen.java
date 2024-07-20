@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class DeleteClientScreen extends Screen {
     public static void showDeleteClientScreen() {
 
+        if (!checkAccessRights(User.enPermissions.pDeleteClient)) {
+            return;
+        }
+
         drawScreenHeader("\t  Delete Client Screen", "");
 
         String accountNumber = "";

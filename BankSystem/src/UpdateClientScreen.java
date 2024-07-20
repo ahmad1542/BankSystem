@@ -17,6 +17,11 @@ public class UpdateClientScreen extends Screen {
     }
 
     public static void showUpdateClientScreen() {
+
+        if (!checkAccessRights(User.enPermissions.pUpdateClient)) {
+            return;
+        }
+
         drawScreenHeader("\tUpdate Client Screen", "");
 
         String accountNumber = "";

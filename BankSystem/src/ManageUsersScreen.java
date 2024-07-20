@@ -97,6 +97,11 @@ public class ManageUsersScreen extends Screen {
     }
 
     public static void showManageUsersMenu() {
+
+        if (!checkAccessRights(User.enPermissions.pManageUsers)) {
+            return;
+        }
+
         System.out.print("\033[H\033[2J");
         System.out.flush();
 

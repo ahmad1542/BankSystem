@@ -70,8 +70,8 @@ public class MainScreen extends Screen {
     private static void showManageUsersMenu() {
         ManageUsersScreen.showManageUsersMenu();
     }
-    private static void showEndScreen() {
-        System.out.println("\nEnd Screen Will be here...\n");
+    private static void logOut() {
+        User.currentUser = User.find("", "");
     }
 
     private static void performMainMenuOption(enMainMenuOptions mainMenuOptions) {
@@ -118,7 +118,7 @@ public class MainScreen extends Screen {
             }
             case enMainMenuOptions.eExit -> {
                 Utility.clearConsole();
-                showEndScreen();
+                logOut();
                 break;
             }
         }

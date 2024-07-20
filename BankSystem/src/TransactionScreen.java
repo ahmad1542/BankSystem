@@ -72,6 +72,11 @@ public class TransactionScreen extends Screen {
     }
 
     public static void showTransactionsMenu() {
+
+        if (!checkAccessRights(User.enPermissions.pTransactions)) {
+            return;
+        }
+
         System.out.print("\033[H\033[2J");
         System.out.flush();
 

@@ -1,5 +1,10 @@
 public class FindClientScreen extends Screen {
     public static void showFindClientScreen() {
+
+        if (!checkAccessRights(User.enPermissions.pFindClient)) {
+            return;
+        }
+
         drawScreenHeader("\tFind Client Screen", "");
 
         String accountNumber;

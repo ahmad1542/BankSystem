@@ -7,15 +7,26 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class User extends Person {
-    public enum enPermissions {
-        eAll,
-        pListClients,
-        pAddNewClient,
-        pDeleteClient,
-        pUpdateClient,
-        pFindClient,
-        pTransactions,
-        pManageUsers,
+    public static User currentUser = find("", "");
+    public static enum enPermissions {
+        eAll(-1),
+        pListClients(1),
+        pAddNewClient(2),
+        pDeleteClient(4),
+        pUpdateClient(8),
+        pFindClient(16),
+        pTransactions(32),
+        pManageUsers(64);
+
+        private final int value;
+
+        enPermissions(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
     private enum enMode {
         emptyMode,
@@ -28,7 +39,10 @@ public class User extends Person {
     private int permissions;
     private boolean markedForDelete = false;
 
-    public User(enMode mode, String firstName, String lastName, String email, String phoneNumber, String userName, String password, int permissions){
+    public User() {
+
+    }
+    public User(enMode mode, String firstName, String lastName, String email, String phoneNumber, String userName, String password, int permissions) {
         super(firstName, lastName, email, phoneNumber);
         this.mode = mode;
         this.userName = userName;
@@ -246,4 +260,13 @@ public class User extends Person {
     public static List <User> getUsersList() {
         return loadUsersDataFromFile();
     }
+
+    public boolean checkAccessPermission(User.enPermissions permission) {
+
+        if (this.permissions == User.enPermissions.eAll.getValue())
+            return true;
+
+        return (permission.getValue() & this.permissions) == permission.getValue();
+    }
+
 }
