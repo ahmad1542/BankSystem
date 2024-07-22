@@ -1,7 +1,6 @@
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
@@ -267,6 +266,19 @@ public class User extends Person {
             return true;
 
         return (permission.getValue() & this.permissions) == permission.getValue();
+    }
+
+    public void registerLogIn() {
+        String seperator = "#//#";
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        String dataLine = (currentDate + " - " + currentTime + seperator + currentUser.getUserName() + seperator + currentUser.password + seperator + currentUser.getPermissions());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("LoginRegister.txt", true))) {
+            writer.newLine();
+            writer.write(dataLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

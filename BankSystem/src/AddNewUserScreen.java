@@ -23,7 +23,7 @@ public class AddNewUserScreen extends Screen {
         Scanner scan = new Scanner(System.in);
         answer = scan.next().charAt(0);
         if (answer == 'y' || answer == 'Y') {
-            return -1;
+            return User.enPermissions.eAll.getValue();
         }
 
         System.out.print("\nDo you want to give access to : \n ");

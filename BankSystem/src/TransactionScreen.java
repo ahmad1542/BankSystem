@@ -66,7 +66,8 @@ public class TransactionScreen extends Screen {
                 break;
             }
             case eShowMainMenu -> {
-
+                Utility.clearConsole();
+                MainScreen.showMainMenu();
             }
         }
     }

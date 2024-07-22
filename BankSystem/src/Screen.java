@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Screen {
@@ -9,6 +10,11 @@ public class Screen {
             System.out.print("\n\t\t\t\t\t\t\t\t\t\t\t\t   " + subTitle);
         }
         System.out.print("\n\t\t\t\t\t\t\t\t\t   _______________________________________\n\n");
+
+        LocalDate currentDate = LocalDate.now();
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\tUser: " + User.currentUser.getUserName());
+        System.out.println("\t\t\t\t\t\t\t\t\t\tDate: " + currentDate + "\n");
     }
 
     protected static boolean checkAccessRights(User.enPermissions permission) {

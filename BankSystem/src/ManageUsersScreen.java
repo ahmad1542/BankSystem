@@ -91,7 +91,8 @@ public class ManageUsersScreen extends Screen {
                 break;
             }
             case eMainMenu -> {
-
+                Utility.clearConsole();
+                MainScreen.showMainMenu();
             }
         }
     }
