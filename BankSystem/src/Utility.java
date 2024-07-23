@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -263,5 +265,17 @@ public class Utility {
             }
         }
         return number;
+    }
+
+    public static String currentDate() {
+        return LocalDate.now().toString();
+    }
+
+    public static String currentTime() {
+        return LocalTime.now().toString();
+    }
+
+    public static String currentDateTime() {
+        return LocalDate.now() + " - " + LocalTime.now();
     }
 }

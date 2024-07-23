@@ -9,12 +9,13 @@ public class MainScreen extends Screen {
         eFindClient,
         eShowTransactionsMenu,
         eManageUsers,
+        eLoginRegister,
         eExit
     }
 
     private static enMainMenuOptions readMainMenuOption() {
-        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 8]? ");
-        short choice = Utility.readShortNumberBetween((short) 1, (short) 8);
+        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 9]? ");
+        short choice = Utility.readShortNumberBetween((short) 1, (short) 9);
         switch (choice) {
             case 1 -> {
                 return enMainMenuOptions.eListClients;
@@ -36,6 +37,9 @@ public class MainScreen extends Screen {
             }
             case 7 -> {
                 return enMainMenuOptions.eManageUsers;
+            }
+            case 8 -> {
+                return enMainMenuOptions.eLoginRegister;
             }
             default ->  {
                 return enMainMenuOptions.eExit;
@@ -69,6 +73,9 @@ public class MainScreen extends Screen {
     }
     private static void showManageUsersMenu() {
         ManageUsersScreen.showManageUsersMenu();
+    }
+    private static void showLoginRegisterMenu() {
+        LoginRegisterScreen.showLoginRegister();
     }
     private static void logOut() {
         User.currentUser = User.find("", "");
@@ -109,11 +116,19 @@ public class MainScreen extends Screen {
             case enMainMenuOptions.eShowTransactionsMenu -> {
                 Utility.clearConsole();
                 showTransactionsMenu();
+                goBackToMainMenu();
                 break;
             }
             case enMainMenuOptions.eManageUsers -> {
                 Utility.clearConsole();
                 showManageUsersMenu();
+                goBackToMainMenu();
+                break;
+            }
+            case eLoginRegister -> {
+                Utility.clearConsole();
+                showLoginRegisterMenu();
+                goBackToMainMenu();
                 break;
             }
             case enMainMenuOptions.eExit -> {
@@ -140,7 +155,8 @@ public class MainScreen extends Screen {
         System.out.printf("%-37s%s\n", "", "\t[5] Find Client.");
         System.out.printf("%-37s%s\n", "", "\t[6] Transactions.");
         System.out.printf("%-37s%s\n", "", "\t[7] Manage Users.");
-        System.out.printf("%-37s%s\n", "", "\t[8] Logout.");
+        System.out.printf("%-37s%s\n", "", "\t[8] Login Register.");
+        System.out.printf("%-37s%s\n", "", "\t[9] Logout.");
         System.out.printf("%-37s%s\n", "", "===========================================");
 
         performMainMenuOption(readMainMenuOption());

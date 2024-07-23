@@ -1,6 +1,5 @@
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
@@ -178,6 +177,7 @@ public class User extends Person {
         try (Scanner fileScanner = new Scanner(new FileReader("Users.txt"))) {
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
+
                 User user = convertLineToUserObject(line);
 
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password))
@@ -268,15 +268,84 @@ public class User extends Person {
         return (permission.getValue() & this.permissions) == permission.getValue();
     }
 
+
+    public static class LoginRegisterRecord {
+        private String dateTime;
+        private String userName;
+        private String password;
+        private int permissions;
+
+        public LoginRegisterRecord(String dateTime, String userName, String password, int permissions) {
+            this.dateTime = dateTime;
+            this.userName = userName;
+            this.password = password;
+            this.permissions = permissions;
+        }
+
+        private String getUserName() {
+            return userName;
+        }
+
+        private String getPassword() {
+            return password;
+        }
+
+        private int getPermissions() {
+            return permissions;
+        }
+
+        private String getDateTime() {
+            return dateTime;
+        }
+
+        static LoginRegisterRecord convertLoginRegisterLineToRecord(String line) {
+            Scanner lineScanner = new Scanner(line);
+            lineScanner.useDelimiter("#//#");
+
+            String dateTime = lineScanner.next();
+            String userName = lineScanner.next();
+            String password = lineScanner.next();
+            int permissions = lineScanner.nextInt();
+
+            lineScanner.close();
+
+            return new LoginRegisterRecord(dateTime, userName, password, permissions);
+        }
+
+        static String prepareLoginRecord() {
+            String seperator = "#//#";
+            String loginRecord = "";
+
+            loginRecord += Utility.currentDateTime() + seperator;
+            loginRecord +=  + seperator;
+            loginRecord +=  + seperator;
+            loginRecord +=  + seperator;
+
+            return loginRecord;
+        }
+    }
+
     public void registerLogIn() {
         String seperator = "#//#";
-        LocalDate currentDate = LocalDate.now();
-        LocalTime currentTime = LocalTime.now();
-        String dataLine = (currentDate + " - " + currentTime + seperator + currentUser.getUserName() + seperator + currentUser.password + seperator + currentUser.getPermissions());
+        String dataLine = LoginRegisterRecord.prepareLoginRecord();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("LoginRegister.txt", true))) {
             writer.newLine();
             writer.write(dataLine);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Vector <LoginRegisterRecord> getLoginRegisterList() {
+        Vector <LoginRegisterRecord> vLoginRegisterRecord = new Vector<>();
+        String line;
+        try (Scanner scan = new Scanner(new FileReader("LoginRegister.txt"))) {
+            while (scan.hasNextLine()) {
+                line = scan.nextLine();
+                vLoginRegisterRecord.add(LoginRegisterRecord.convertLoginRegisterLineToRecord(line));
+            }
+
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
