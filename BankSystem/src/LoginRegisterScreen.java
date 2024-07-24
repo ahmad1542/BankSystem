@@ -2,12 +2,12 @@ import java.util.List;
 
 public class LoginRegisterScreen extends Screen {
 
-    private static void printLoginRegisterUsersRecordLine(User user) {
-        System.out.format("%-8s| %-35s| %-12s| %-12s| %-20s%n", "", Utility.currentDateTime(), user.getUserName(), user.getPassword(), user.getPermissions());
+    private static void printLoginRegisterUsersRecordLine(User.LoginRegisterRecord user) {
+        System.out.format("%-8s| %-35s| %-12s| %-12s| %-20s%n", "", user.getDateTime(), user.getUserName(), user.getPassword(), user.getPermissions());
     }
 
     public static void showLoginRegister() {
-        if (!checkAccessRights(User.enPermissions.pListClients)) {
+        if (!checkAccessRights(User.enPermissions.pShowLoginRegister)) {
             return;
         }
         List<User.LoginRegisterRecord> lUsers = User.getLoginRegisterList();

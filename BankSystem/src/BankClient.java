@@ -101,8 +101,8 @@ public class BankClient extends Person {
 
     private void addDataLineToFile(String dataLine) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Clients.txt", true))) {
-            writer.newLine();
             writer.write(dataLine);
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

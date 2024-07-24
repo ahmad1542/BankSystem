@@ -14,7 +14,8 @@ public class User extends Person {
         pUpdateClient(8),
         pFindClient(16),
         pTransactions(32),
-        pManageUsers(64);
+        pManageUsers(64),
+        pShowLoginRegister(128);
 
         private final int value;
 
@@ -269,33 +270,22 @@ public class User extends Person {
     }
 
 
-    public static class LoginRegisterRecord {
+    public static class LoginRegisterRecord extends User {
         private String dateTime;
-        private String userName;
-        private String password;
-        private int permissions;
 
         public LoginRegisterRecord(String dateTime, String userName, String password, int permissions) {
             this.dateTime = dateTime;
-            this.userName = userName;
-            this.password = password;
-            this.permissions = permissions;
+            this.setUserName(userName);
+            this.setPassword(password);
+            this.setPermissions(permissions);
         }
 
-        private String getUserName() {
-            return userName;
-        }
-
-        private String getPassword() {
-            return password;
-        }
-
-        private int getPermissions() {
-            return permissions;
-        }
-
-        private String getDateTime() {
+        public String getDateTime() {
             return dateTime;
+        }
+
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
         }
 
         static LoginRegisterRecord convertLoginRegisterLineToRecord(String line) {
@@ -317,16 +307,15 @@ public class User extends Person {
             String loginRecord = "";
 
             loginRecord += Utility.currentDateTime() + seperator;
-            loginRecord +=  + seperator;
-            loginRecord +=  + seperator;
-            loginRecord +=  + seperator;
+            loginRecord += User.currentUser.getUserName() + seperator;
+            loginRecord += User.currentUser.getPassword() + seperator;
+            loginRecord += User.currentUser.getPermissions();
 
             return loginRecord;
         }
     }
 
     public void registerLogIn() {
-        String seperator = "#//#";
         String dataLine = LoginRegisterRecord.prepareLoginRecord();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("LoginRegister.txt", true))) {
             writer.newLine();
@@ -348,6 +337,7 @@ public class User extends Person {
         } catch (IOException e){
             e.printStackTrace();
         }
+        return vLoginRegisterRecord;
     }
 
 }

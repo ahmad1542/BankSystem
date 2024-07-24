@@ -14,9 +14,9 @@ public class WithdrawScreen extends Screen {
     public static void showWithdrawScreen() {
         drawScreenHeader("\t   Withdraw Screen", "");
 
-        String accountNumbner = readAccountNumber();
+        String accountNumber = readAccountNumber();
 
-        BankClient client = BankClient.find(accountNumbner);
+        BankClient client = BankClient.find(accountNumber);
         System.out.println(client);
 
         double amount = 0;

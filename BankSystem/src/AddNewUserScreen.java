@@ -70,6 +70,12 @@ public class AddNewUserScreen extends Screen {
             permissions += 64;
         }
 
+        System.out.print("\nShow Login Register? y/n? ");
+        answer = scan.next().charAt(0);
+        if (answer == 'y' || answer == 'Y') {
+            permissions += 128;
+        }
+
         return permissions;
     }
 

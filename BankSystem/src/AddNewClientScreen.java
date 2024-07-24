@@ -39,7 +39,7 @@ public class AddNewClientScreen extends Screen {
 
         switch (saveResults) {
             case BankClient.enSaveResults.svSucceeded -> {
-                System.out.println("\nAccount Addeded Successfully :-)");
+                System.out.println("\nAccount Added Successfully :-)");
                 System.out.println(newClient);
             }
             case BankClient.enSaveResults.svFailedEmptyObject -> {
