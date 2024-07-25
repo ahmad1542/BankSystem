@@ -28,6 +28,8 @@ public class BankClient extends Person {
     private double balance;
     private boolean markedForDelete;
 
+    public BankClient() {}
+
     public BankClient(enMode mode, String firstName, String lastName, String email, String phoneNumber,
                       String accountNumber, String pinCode, double balance) {
         super(firstName, lastName, email, phoneNumber);
@@ -272,6 +274,139 @@ public class BankClient extends Person {
             save();
         }
         return true;
+    }
+
+    public static class TransferLogRecord extends BankClient {
+        private String dateTime;
+        String fromClientAccNum;
+        String toClientAccNum;
+        double amount;
+        double fromClientBalance;
+        double toClientBalance;
+        String userName;
+
+        public TransferLogRecord(String dateTime, String fromClientAccNum, String toClientAccNum, double amount, double fromClientBalance, double toClientBalance, String userName) {
+            this.dateTime = dateTime;
+            this.setFromClientAccNum(fromClientAccNum);
+            this.setToClientAccNum(toClientAccNum);
+            this.setAmount(amount);
+            this.setFromClientBalance(fromClientBalance);
+            this.setToClientBalance(toClientBalance);
+            this.setUserName(userName);
+        }
+
+        public String getFromClientAccNum() {
+            return fromClientAccNum;
+        }
+
+        public void setFromClientAccNum(String fromClientAccNum) {
+            this.fromClientAccNum = fromClientAccNum;
+        }
+
+        public String getToClientAccNum() {
+            return toClientAccNum;
+        }
+
+        public void setToClientAccNum(String toClientAccNum) {
+            this.toClientAccNum = toClientAccNum;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+
+        public void setAmount(double amount) {
+            this.amount = amount;
+        }
+
+        public double getFromClientBalance() {
+            return fromClientBalance;
+        }
+
+        public void setFromClientBalance(double fromClientBalance) {
+            this.fromClientBalance = fromClientBalance;
+        }
+
+        public double getToClientBalance() {
+            return toClientBalance;
+        }
+
+        public void setToClientBalance(double toClientBalance) {
+            this.toClientBalance = toClientBalance;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getDateTime() {
+            return dateTime;
+        }
+
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        static TransferLogRecord convertTransferLogLineToRecord(String line) {
+            Scanner lineScanner = new Scanner(line);
+            lineScanner.useDelimiter("#//#");
+
+            String dateTime = lineScanner.next();
+            String fromClientAccNum = lineScanner.next();
+            String toClientAccNum = lineScanner.next();
+            double amount = lineScanner.nextDouble();
+            double fromClientBalance = lineScanner.nextDouble();
+            double toClientBalance = lineScanner.nextDouble();
+            String userName = lineScanner.next();
+
+            lineScanner.close();
+
+            return new TransferLogRecord(dateTime, fromClientAccNum, toClientAccNum, amount, fromClientBalance, toClientBalance, userName);
+        }
+
+        private static String prepareTransferRecord(BankClient fromClient, BankClient toClient, double transferAmount) {
+            String separator = "#//#";
+            String loginRecord = "";
+
+            loginRecord += Utility.currentDateTime() + separator;
+            loginRecord += fromClient.getAccountNumber() + separator;
+            loginRecord += toClient.getAccountNumber() + separator;
+            loginRecord += transferAmount + separator;
+            loginRecord += fromClient.getBalance() + separator;
+            loginRecord += toClient.getBalance() + separator;
+            loginRecord += User.currentUser.getUserName();
+
+            return loginRecord;
+        }
+    }
+
+    public void transfer(BankClient fromClient, BankClient toClient, double transferAmount) {
+        String dataLine = TransferLogRecord.prepareTransferRecord(fromClient, toClient, transferAmount);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TransferLog.txt", true))) {
+            writer.write(dataLine);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Vector <TransferLogRecord> getTransferLogList() {
+        Vector <TransferLogRecord> vTransferLogRecord = new Vector<>();
+        String line;
+        try (Scanner scan = new Scanner(new FileReader("TransferLog.txt"))) {
+            while (scan.hasNextLine()) {
+                line = scan.nextLine();
+                vTransferLogRecord.add(TransferLogRecord.convertTransferLogLineToRecord(line));
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return vTransferLogRecord;
     }
 
     @Override

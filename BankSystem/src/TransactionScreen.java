@@ -6,12 +6,13 @@ public class TransactionScreen extends Screen {
         eWithdraw,
         eShowTotalBalance,
         eTransfers,
+        eTransferLog,
         eShowMainMenu
     }
 
     private static enTransactionMenuOptions readTransactionsMenuOption() {
-        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 5]? ");
-        short input = Utility.readShortNumberBetween((short) 1, (short) 5);
+        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 6]? ");
+        short input = Utility.readShortNumberBetween((short) 1, (short) 6);
         switch (input) {
             case 1 -> {
                 return enTransactionMenuOptions.eDeposit;
@@ -26,6 +27,9 @@ public class TransactionScreen extends Screen {
                 return enTransactionMenuOptions.eTransfers;
             }
             case 5 -> {
+                return enTransactionMenuOptions.eTransferLog;
+            }
+            case 6 -> {
                 return enTransactionMenuOptions.eShowMainMenu;
             }
             default -> {
@@ -45,6 +49,9 @@ public class TransactionScreen extends Screen {
     }
     private static void showTransfersScreen() {
         TransfersScreen.showTransfersScreen();
+    }
+    private static void showTransfersLogScreen() {
+        TransferLogScreen.showTransferLogScreen();
     }
     private static void goBackToTransactionsMenu() {
         System.out.println("\n\nPress any key to go back to Transactions Menue...");
@@ -78,6 +85,12 @@ public class TransactionScreen extends Screen {
                 goBackToTransactionsMenu();
                 break;
             }
+            case eTransferLog -> {
+                Utility.clearConsole();
+                showTransfersLogScreen();
+                goBackToTransactionsMenu();
+                break;
+            }
             case eShowMainMenu -> {
                 Utility.clearConsole();
                 MainScreen.showMainMenu();
@@ -104,7 +117,8 @@ public class TransactionScreen extends Screen {
         System.out.printf("%-37s%s", "", "\t[2] Withdraw.\n");
         System.out.printf("%-37s%s", "", "\t[3] Total Balances.\n");
         System.out.printf("%-37s%s", "", "\t[4] Transfer.\n");
-        System.out.printf("%-37s%s", "", "\t[5] Main Menu.\n");
+        System.out.printf("%-37s%s", "", "\t[5] Transfer Log.\n");
+        System.out.printf("%-37s%s", "", "\t[6] Main Menu.\n");
         System.out.printf("%-37s%s", "", "===========================================\n");
 
         performTransactionsMenuOption(readTransactionsMenuOption());

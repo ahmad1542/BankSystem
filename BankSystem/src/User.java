@@ -1,5 +1,7 @@
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
@@ -269,7 +271,6 @@ public class User extends Person {
         return (permission.getValue() & this.permissions) == permission.getValue();
     }
 
-
     public static class LoginRegisterRecord extends User {
         private String dateTime;
 
@@ -303,12 +304,12 @@ public class User extends Person {
         }
 
         static String prepareLoginRecord() {
-            String seperator = "#//#";
+            String separator = "#//#";
             String loginRecord = "";
 
-            loginRecord += Utility.currentDateTime() + seperator;
-            loginRecord += User.currentUser.getUserName() + seperator;
-            loginRecord += User.currentUser.getPassword() + seperator;
+            loginRecord += Utility.currentDateTime() + separator;
+            loginRecord += User.currentUser.getUserName() + separator;
+            loginRecord += User.currentUser.getPassword() + separator;
             loginRecord += User.currentUser.getPermissions();
 
             return loginRecord;

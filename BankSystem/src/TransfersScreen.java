@@ -40,6 +40,7 @@ public class TransfersScreen extends Screen {
             toClient.deposit(transferAmount);
             System.out.println(fromClient);
             System.out.println(toClient);
+            fromClient.transfer(fromClient, toClient, transferAmount);
         }
     }
 }
