@@ -5,154 +5,11 @@ import java.util.Scanner;
 
 public class Utility {
 
-    public enum CharType {
-        SmallLetter(1),
-        CapitalLetter(2),
-        Digit(3),
-        MixChars(4),
-        SpecialCharacter(5);
-
-        private final int value;
-
-        CharType(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public static CharType fromInt(int value) {
-            for (CharType type : CharType.values()) {
-                if (type.getValue() == value) {
-                    return type;
-                }
-            }
-            return null;
-        }
-    }
 
     private static final Random random = new Random();
 
-    public static void srand() {
-        random.setSeed(System.currentTimeMillis());
-    }
-
     public static int randomNumber(int from, int to) {
         return random.nextInt(to - from + 1) + from;
-    }
-
-    public static char getRandomCharacter(CharType charType) {
-        if (charType == CharType.MixChars) {
-            charType = CharType.fromInt(randomNumber(1, 3));
-        }
-
-        switch (charType) {
-            case SmallLetter:
-                return (char) randomNumber(97, 122);
-            case CapitalLetter:
-                return (char) randomNumber(65, 90);
-            case SpecialCharacter:
-                return (char) randomNumber(33, 47);
-            case Digit:
-                return (char) randomNumber(48, 57);
-            default:
-                return (char) randomNumber(65, 90);
-        }
-    }
-
-    public static String generateWord(CharType charType, short length) {
-        StringBuilder word = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            word.append(getRandomCharacter(charType));
-        }
-
-        return word.toString();
-    }
-
-    public static String generateKey(CharType charType) {
-        return generateWord(charType, (short) 4) + "-" +
-                generateWord(charType, (short) 4) + "-" +
-                generateWord(charType, (short) 4) + "-" +
-                generateWord(charType, (short) 4);
-    }
-
-    public static void generateKeys(short numberOfKeys, CharType charType) {
-        for (int i = 1; i <= numberOfKeys; i++) {
-            System.out.printf("Key [%d] : %s%n", i, generateKey(charType));
-        }
-    }
-
-    public static void fillArrayWithRandomNumbers(int[] arr, int from, int to) {
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = randomNumber(from, to);
-        }
-    }
-
-    public static void fillArrayWithRandomWords(String[] arr, CharType charType, short wordLength) {
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = generateWord(charType, wordLength);
-        }
-    }
-
-    public static void fillArrayWithRandomKeys(String[] arr, CharType charType) {
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = generateKey(charType);
-        }
-    }
-
-    public static void swap(int[] a, int i, int j) {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-    public static void swap(double[] a, int i, int j) {
-        double temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-    public static void swap(boolean[] a, int i, int j) {
-        boolean temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-    public static void swap(char[] a, int i, int j) {
-        char temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-    public static void swap(String[] a, int i, int j) {
-        String temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-    public static void shuffleArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            swap(arr, randomNumber(0, arr.length - 1), randomNumber(0, arr.length - 1));
-        }
-    }
-
-    public static void shuffleArray(String[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            swap(arr, randomNumber(0, arr.length - 1), randomNumber(0, arr.length - 1));
-        }
-    }
-
-    public static String tabs(short numberOfTabs) {
-        StringBuilder t = new StringBuilder();
-
-        for (int i = 1; i < numberOfTabs; i++) {
-            t.append("\t");
-            System.out.print(t.toString());
-        }
-
-        return t.toString();
     }
 
     public static String numberToText(int number) {
@@ -277,5 +134,43 @@ public class Utility {
 
     public static String currentDateTime() {
         return LocalDate.now() + " - " + LocalTime.now();
+    }
+
+    private static String encryptTextSkeleton(String Text, short encryptionKey) {
+        StringBuilder encryptedText = new StringBuilder();
+
+        for (int i = 0; i < Text.length(); i++) {
+            char encryptedChar = (char) ((int) Text.charAt(i) + encryptionKey);
+            encryptedText.append(encryptedChar);
+        }
+
+        return encryptedText.toString();
+    }
+
+    public static String encryptText(String Text) {
+        return encryptTextSkeleton(Text, (short) 2);
+    }
+
+    public static String encryptText(String Text, short encryptionKey) {
+        return encryptTextSkeleton(Text, encryptionKey);
+    }
+
+    private static String decryptTextSkeleton(String Text, short encryptionKey) {
+        StringBuilder decryptedText = new StringBuilder();
+
+        for (int i = 0; i < Text.length(); i++) {
+            char decryptedChar = (char) ((int) Text.charAt(i) - encryptionKey);
+            decryptedText.append(decryptedChar);
+        }
+
+        return decryptedText.toString();
+    }
+
+    public static String decryptText(String Text) {
+        return decryptTextSkeleton(Text, (short) 2);
+    }
+
+    public static String decryptText(String Text, short encryptionKey) {
+        return decryptTextSkeleton(Text, encryptionKey);
     }
 }

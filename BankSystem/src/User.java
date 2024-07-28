@@ -93,12 +93,12 @@ public class User extends Person {
 
         lineScanner.close();
 
-        return new User(enMode.updateMode, firstName, lastName, email, phoneNumber, userName, password, permissions);
+        return new User(enMode.updateMode, firstName, lastName, email, phoneNumber, userName, Utility.decryptText(password), permissions);
     }
 
     private String convertUserObjectToLine(User user) {
         return user.getFirstName() + "#//#" + user.getLastName() + "#//#" + user.getEmail() + "#//#" + user.getPhoneNumber() +
-                "#//#" + user.userName + "#//#" + user.password + "#//#" + user.permissions;
+                "#//#" + user.userName + "#//#" + Utility.encryptText(user.password) + "#//#" + user.permissions;
     }
 
     private static Vector<User> loadUsersDataFromFile() {
@@ -300,7 +300,7 @@ public class User extends Person {
 
             lineScanner.close();
 
-            return new LoginRegisterRecord(dateTime, userName, password, permissions);
+            return new LoginRegisterRecord(dateTime, userName, Utility.decryptText(password), permissions);
         }
 
         static String prepareLoginRecord() {
@@ -309,7 +309,7 @@ public class User extends Person {
 
             loginRecord += Utility.currentDateTime() + separator;
             loginRecord += User.currentUser.getUserName() + separator;
-            loginRecord += User.currentUser.getPassword() + separator;
+            loginRecord += Utility.encryptText(User.currentUser.getPassword()) + separator;
             loginRecord += User.currentUser.getPermissions();
 
             return loginRecord;
