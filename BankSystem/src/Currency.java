@@ -2,9 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Currency {
     enum enMode {
@@ -123,7 +121,35 @@ public class Currency {
     }
 
     public static Currency findByCode(String currencyCode) {
-        return null;
+        try (Scanner fileScanner = new Scanner(new FileReader("Currency.txt"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                Currency curr = convertLineToCurrencyObject(line);
+                currencyCode = currencyCode.toUpperCase();
+                if (curr.getCurrencyCode().equals(currencyCode)) {
+                    return curr;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getEmptyCurrencyObject();
+    }
+
+    public static Currency findByCountry(String country) {
+        try (Scanner fileScanner = new Scanner(new FileReader("Currency.txt"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                Currency curr = convertLineToCurrencyObject(line);
+                country = country.toUpperCase();
+                if (curr.getCountry().toUpperCase().equals(country)) {
+                    return curr;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getEmptyCurrencyObject();
     }
 
     public static boolean IsCurrencyExist(String currencyCode) {
@@ -134,5 +160,16 @@ public class Currency {
 
     public static List <Currency> GetCurrenciesList() {
         return loadCurrencyDataFromFile();
+    }
+
+    @Override
+    public String toString() {
+        return  "\nCurrency Card:\n" +
+                "_____________________________\n" +
+                "\n country    : " + country +
+                "\n Code       : " + currencyCode +
+                "\n Name       : " + currencyName +
+                "\n Rate(1$) = : " + rate +
+                "\n_____________________________\n";
     }
 }

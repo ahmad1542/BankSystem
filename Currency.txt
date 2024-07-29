@@ -58,7 +58,7 @@ Dominica#//#XCD#//#E.C. Dollar#//#2.700000
 Dominican Republic#//#DOP#//#Dominican Peso#//#54.716000
 East Timor#//#USD#//#US Dollar#//#1.000000
 Ecuador#//#USD#//#US Dollar#//#1.000000
-Egypt#//#EGP#//#Egyptian Pound#//#24.591999
+Egypt#//#EGP#//#Egyptian Pound#//#48.32981
 El Salvador#//#USD#//#US Dollar#//#1.000000
 Equatorial Guinea#//#XAF#//#CFA Franc#//#615.401978
 Eritrea#//#ERN#//#Eritrea Nakfa#//#15.000000
@@ -95,11 +95,11 @@ Indonesia#//#IDR#//#Indonesia Rupiah#//#15655.000000
 Iran#//#IRR#//#Iranian Rial#//#286676.000000
 Iraq#//#IQD#//#Iraqi Dinar#//#1450.000000
 Ireland#//#EUR#//#Euro#//#0.938000
-Israel#//#ILS#//#Israel Shekel#//#3.389000
+Israel#//#ILS#//#Israel Shekel#//#3.7184545
 Italy#//#EUR#//#Euro#//#0.938000
 Jamaica#//#JMD#//#Jamaican Dollar#//#153.470001
 Japan#//#JPY#//#Japanese Yen#//#134.869995
-Jordan#//#JOD#//#Jordanian Dinar#//#0.708000
+Jordan#//#JOD#//#Jordanian Dinar#//#0.709
 Kazakhstan#//#KZT#//#Kazakhstan Tenge#//#468.950012
 Kenya#//#KES#//#Kenyan Shilling#//#122.739998
 Kiribati#//#AUD#//#Australian Dollar#//#1.451000
@@ -207,7 +207,7 @@ Turks and Caicos Island#//#USD#//#US Dollar#//#1.000000
 Tuvalu#//#AUD#//#Australian Dollar#//#1.451000
 Uganda#//#UGX#//#Uganda Shilling#//#3690.669922
 Ukraine#//#UAH#//#Ukraine Hryvnia#//#37.000000
-United Arab Emirates#//#AED#//#United Arab Emirates Dirham#//#3.673000
+United Arab Emirates#//#AED#//#United Arab Emirates Dirham#//#3.6725
 United Kingdom#//#GBP#//#U.K. Pound#//#0.804000
 Uruguay#//#UYU#//#Uruguay Peso#//#38.525002
 Uzbekistan#//#UZS#//#Uzbekistan Sum#//#11245.000000

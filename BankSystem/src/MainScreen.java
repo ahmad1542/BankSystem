@@ -10,12 +10,13 @@ public class MainScreen extends Screen {
         eShowTransactionsMenu,
         eManageUsers,
         eLoginRegister,
+        eCurrencyExchange,
         eExit
     }
 
     private static enMainMenuOptions readMainMenuOption() {
-        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 9]? ");
-        short choice = Utility.readShortNumberBetween((short) 1, (short) 9);
+        System.out.printf("%-37s%s", "", "Choose what do you want to do? [1 to 10]? ");
+        short choice = Utility.readShortNumberBetween((short) 1, (short) 10);
         switch (choice) {
             case 1 -> {
                 return enMainMenuOptions.eListClients;
@@ -40,6 +41,9 @@ public class MainScreen extends Screen {
             }
             case 8 -> {
                 return enMainMenuOptions.eLoginRegister;
+            }
+            case 9 -> {
+                return enMainMenuOptions.eCurrencyExchange;
             }
             default ->  {
                 return enMainMenuOptions.eExit;
@@ -76,6 +80,9 @@ public class MainScreen extends Screen {
     }
     private static void showLoginRegisterMenu() {
         LoginRegisterScreen.showLoginRegister();
+    }
+    private static void showCurrencyExchangeMenu() {
+        CurrencyExchangeMainScreen.showCurrenciesMenu();
     }
     private static void logOut() {
         User.currentUser = User.find("", "");
@@ -131,6 +138,12 @@ public class MainScreen extends Screen {
                 goBackToMainMenu();
                 break;
             }
+            case eCurrencyExchange -> {
+                Utility.clearConsole();
+                showCurrencyExchangeMenu();
+                goBackToMainMenu();
+                break;
+            }
             case enMainMenuOptions.eExit -> {
                 Utility.clearConsole();
                 logOut();
@@ -156,7 +169,8 @@ public class MainScreen extends Screen {
         System.out.printf("%-37s%s\n", "", "\t[6] Transactions.");
         System.out.printf("%-37s%s\n", "", "\t[7] Manage Users.");
         System.out.printf("%-37s%s\n", "", "\t[8] Login Register.");
-        System.out.printf("%-37s%s\n", "", "\t[9] Logout.");
+        System.out.printf("%-37s%s\n", "", "\t[9] Currency Exchange.");
+        System.out.printf("%-37s%s\n", "", "\t[10] Logout.");
         System.out.printf("%-37s%s\n", "", "===========================================");
 
         performMainMenuOption(readMainMenuOption());

@@ -17,7 +17,8 @@ public class User extends Person {
         pFindClient(16),
         pTransactions(32),
         pManageUsers(64),
-        pShowLoginRegister(128);
+        pShowLoginRegister(128),
+        pShowCurrencyExchange(256);
 
         private final int value;
 
