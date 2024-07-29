@@ -10,7 +10,7 @@ public class ListUsersScreen extends Screen {
         List <User> lUsers = User.getUsersList();
 
         String title = "\t  User List Screen";
-        String subTitle = "\t(" + lUsers.size() + ") User(s).";
+        String subTitle = String.format("\t(%d) User(s).", lUsers.size());
 
         drawScreenHeader(title, subTitle);
 
