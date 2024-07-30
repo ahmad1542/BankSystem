@@ -124,6 +124,10 @@ public class Utility {
         return number;
     }
 
+    public static char readChar() {
+        return new Scanner(System.in).next().charAt(0);
+    }
+
     public static String currentDate() {
         return LocalDate.now().toString();
     }

@@ -2,7 +2,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Currency {
     enum enMode {
@@ -70,7 +72,7 @@ public class Currency {
         return  currencyRecord;
     }
 
-    private static List <Currency> loadCurrencyDataFromFile() {
+    private static List<Currency> loadCurrencyDataFromFile() {
         String dataLine;
         List <Currency> lCurrency = new ArrayList<>();
         try (Scanner fileScanner = new Scanner(new FileReader("Currency.txt"))) {
@@ -152,7 +154,7 @@ public class Currency {
         return getEmptyCurrencyObject();
     }
 
-    public static boolean IsCurrencyExist(String currencyCode) {
+    public static boolean isCurrencyExist(String currencyCode) {
         Currency C1 = Currency.findByCode(currencyCode);
         return (!C1.isEmpty());
 
@@ -160,6 +162,18 @@ public class Currency {
 
     public static List <Currency> GetCurrenciesList() {
         return loadCurrencyDataFromFile();
+    }
+
+    public double convertToUSD(double amount) {
+        return (double) (amount / getRate());
+    }
+
+    public double convertToOtherCurrencies(double amount, Currency toCurrency) {
+        double amountInUSD = convertToUSD(amount);
+        if (toCurrency.getCurrencyCode().equalsIgnoreCase("USD")) {
+            return amountInUSD;
+        }
+        return (double) (amountInUSD * toCurrency.getRate());
     }
 
     @Override

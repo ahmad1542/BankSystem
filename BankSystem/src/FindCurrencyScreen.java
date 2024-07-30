@@ -15,17 +15,17 @@ public class FindCurrencyScreen extends Screen {
 
         drawScreenHeader("\t  Find Currency Screen", "");
 
-        System.out.print("Find By: [1] Code or [2] Country ? ");
         Scanner answerScanner = new Scanner(System.in);
+        System.out.print("Find By: [1] Code or [2] Country ? ");
         short answer = answerScanner.nextShort();
         if (answer == 1) {
             System.out.print("\nPlease Enter CurrencyCode: ");
-            String currencyCode = answerScanner.nextLine();
+            String currencyCode = Utility.readString();
             showResults(Currency.findByCode(currencyCode));
         }
         else {
             System.out.print("\nPlease Enter Country Name: ");
-            String country = answerScanner.nextLine();
+            String country = Utility.readString();
             showResults(Currency.findByCountry(country));
         }
     }

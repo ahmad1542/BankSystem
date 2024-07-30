@@ -42,15 +42,15 @@ public class CurrencyExchangeMainScreen extends Screen {
     }
 
     private static void showFindCurrencyScreen() {
-        System.out.println("\nFind Currency Screen Will Be Here.\n");
+        FindCurrencyScreen.showFindCurrencyScreen();
     }
 
     private static void showUpdateCurrencyRateScreen() {
-        System.out.println("\nUpdate Currency Rate Screen Will Be Here.\n");
+        UpdateCurrencyRateScreen.showUpdateCurrencyRateScreen();
     }
 
     private static void showCurrencyCalculatorScreen() {
-        System.out.println("\nCurrency Calculator Screen Will Be Here.\n");
+        CurrencyCalculatorScreen.showCurrencyCalculatorScreen();
     }
 
     private static void performCurrenciesMainMenuOptions(enCurrenciesMainMenuOptions CurrenciesMainMenuOptions) {
@@ -88,7 +88,7 @@ public class CurrencyExchangeMainScreen extends Screen {
 
     public static void showCurrenciesMenu() {
         Utility.clearConsole();
-        drawScreenHeader("    Currency Exchange Main Screen", "");
+        drawScreenHeader("Currency Exchange Main Screen", "");
 
         System.out.format("%-37s===========================================%n", "");
         System.out.format("%-37s\t\t  Currency Exchange Menu\n", "");
